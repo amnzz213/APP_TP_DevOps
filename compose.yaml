@@ -34,10 +34,9 @@ services:
 
 volumes:
   mongo-data:
-    external: true
     name: tp-mongo-data
 
 networks:
   tp-network:
-    external: true
     name: tp-network
+    driver: bridge
