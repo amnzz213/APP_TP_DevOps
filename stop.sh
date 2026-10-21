@@ -1,12 +1,13 @@
 #!/bin/bash
 
-if [ "$(sudo docker inspect -f '{{.State.Running }}' app_tp_devops-tp-mongo-1)" = "true" ]; then
-    sudo docker exec app_tp_devops-tp-mongo-1 mongodump --archive=/tmp/mongo_archive
-    sudo docker cp app_tp_devops-tp-mongo-1:/tmp/mongo_archive ./mongo_archive
+MONGO_CONTAINER=$(sudo docker ps --filter "ancestor=mongo:7" --format "{{ .Names }}")
 
-    if [ $? -eq 0 ]; then
+if [ "$(sudo docker inspect -f '{{.State.Running }}' "$MONGO_CONTAINER")" = "true" ]; then
+    sudo docker exec "$MONGO_CONTAINER" mongodump --archive=/tmp/mongo_archive
+
+    if sudo docker cp "$MONGO_CONTAINER":/tmp/mongo_archive ./mongo_archive; then
         sudo docker compose stop
-        if [ $(sudo docker compose ps --status running | tail -n +2 | wc -l ) -eq 0 ]; then
+        if sudo docker compose ps --filter "status=running" -q | wc -l; then
             echo "Shutdown : OK"
         else 
             echo "Shutwon : NOK"
