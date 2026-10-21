@@ -4,7 +4,7 @@ if [ "$(sudo docker inspect -f '{{.State.Running }}' app_tp_devops-tp-mongo-1)" 
     sudo docker exec app_tp_devops-tp-mongo-1 mongodump --archive=/tmp/mongo_archive
     sudo docker cp app_tp_devops-tp-mongo-1:/tmp/mongo_archive ./mongo_archive
 
-    if [ $? ]; then
+    if [ $? -eq 0 ]; then
         sudo docker compose stop
         if [ $(sudo docker compose ps --status running | tail -n +2 | wc -l ) -eq 0 ]; then
             echo "Shutdown : OK"
