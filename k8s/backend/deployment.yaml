@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: backend
+  namespace: backend
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      app: backend
+
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers: 
+        - name: backend
+          image: docker.io/library/app_tp_devops-tp-backend:latest
+          env:
+            - name: MONGO_URI
+              value: "mongodb://mongo-ip.mongo.scv.cluster.local:27017/goalsetter"
+          imagePullPolicy: Never
+          ports: 
+            - containerPort: 5000
