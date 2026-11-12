@@ -22,6 +22,10 @@ spec:
           env:
             - name: MONGO_URI
               value: "mongodb://mongo-ip.mongo.svc.cluster.local:27017/goalsetter"
+            - name: JWT_SECRET
+              value: "abc123"
+            - name: NODE_ENV
+              value: "development"
           imagePullPolicy: Never
           ports: 
             - containerPort: 5000
