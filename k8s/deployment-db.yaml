@@ -10,6 +10,7 @@ spec:
     matchLabels:
       app: mongo
   replicas: 1
+  
   template:
     metadata:
       labels:

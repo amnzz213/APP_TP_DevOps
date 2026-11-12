@@ -10,7 +10,7 @@ if [ "$(sudo docker inspect -f '{{.State.Running }}' "$MONGO_CONTAINER")" = "tru
         if sudo docker compose ps --filter "status=running" -q | wc -l; then
             echo "Shutdown : OK"
         else 
-            echo "Shutwon : NOK"
+            echo "Shutdown : NOK"
         fi 
     else
         echo "Failed to retrieve the data of mongo"
